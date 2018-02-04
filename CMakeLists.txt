@@ -17,11 +17,9 @@ include(CMakeToolsHelpers OPTIONAL)
 # make sure the binary is put in the bin dir
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR} )
 
-# add files
-set( SRC ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-set(SOURCES
-    ${SRC}/main.cpp
-)
+# add all of our source code
+add_subdirectory(source)
 
 add_executable( ${EXE} ${SOURCES} )
+include_directories( ${INCLUDE_DIRS} )
+target_link_libraries( ${EXE} ${PROJECT_LIBS} )

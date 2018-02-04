@@ -3,6 +3,8 @@
 #include <array>
 #include <string>
 
+#include "GameState.h"
+
 
 int main(int argc, char* arv[]) {
     bool gameOver = false;
@@ -18,6 +20,8 @@ int main(int argc, char* arv[]) {
     using Board = std::array<std::array<char, 3>, 3>;
     Board board;
     board.fill(std::array<char, 3>{' ', ' ', ' '});
+
+    GameState gameState;
 
     while(!gameOver) {
         // GET NEXT MOVE FROM PLAYER OR COMPUTER
