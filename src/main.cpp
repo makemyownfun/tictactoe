@@ -73,6 +73,31 @@ int main(int argc, char* arv[]) {
         }
 
         // CHECK FOR A WIN CONDITION
+        // horizontal win
+        if(board[x][0] == board[x][1] && board[x][1] == board[x][2]) {
+            gameOver = true;
+        }
+        // vertical win
+        else if(board[0][y] == board[1][y] && board[1][y] == board[2][y]) {
+            gameOver = true;
+        }
+        // diagonal win
+        else if(x == y) {
+            if(board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+                gameOver = true;
+            }
+        }
+        // other diagonal win
+        else if( (x+y) == 2) {
+            if(board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+                gameOver = true;
+            }
+        }
+
+        if(gameOver) {
+            std::cout << val << " wins!" << std::endl;
+        }
+
         count++;
         if(count == 9) {
             std::cout << "scratch game" << std::endl;
