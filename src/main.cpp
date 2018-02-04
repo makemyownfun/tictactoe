@@ -68,6 +68,9 @@ int main(int argc, char* arv[]) {
         }
 
         // UPDATE VISUAL STATE OF THE BOARD
+        for(auto& row : board) {
+            std::cout << row[0] << " | " << row[1] << " | " << row[2] << std::endl;
+        }
 
         // CHECK FOR A WIN CONDITION
         count++;
