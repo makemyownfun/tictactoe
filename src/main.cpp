@@ -1,13 +1,24 @@
 #include <iostream>
+#include <sstream>
+#include <array>
+#include <string>
 
 
 int main(int argc, char* arv[]) {
     bool gameOver = false;
+    bool playerTurn = true;
     char val;
     int x = 0;
     int y = 0;
+    int count = 0;
+
     int aiX = -1;
     int aiY = 0;
+
+    using Board = std::array<std::array<char, 3>, 3>;
+    Board board;
+    board.fill(std::array<char, 3>{' ', ' ', ' '});
+
     while(!gameOver) {
         // GET NEXT MOVE FROM PLAYER OR COMPUTER
         if(playerTurn) {
@@ -48,11 +59,24 @@ int main(int argc, char* arv[]) {
         }
 
         // ADD THE MOVE TO THE BOARD
+        // if the space is already filled, continue
+        if(board[x][y] != ' ') {
+            std::cout << "cannot play at: " << x << " " << y << std::endl;
+            continue;
+        } else {
+            board[x][y] = val;
+        }
 
         // UPDATE VISUAL STATE OF THE BOARD
 
         // CHECK FOR A WIN CONDITION
+        count++;
+        if(count == 9) {
+            std::cout << "scratch game" << std::endl;
+            gameOver = true;
+        }
 
+        playerTurn = !playerTurn;
     }
     return 0;
 }
