@@ -4,6 +4,9 @@
 class App {
     int m_screenWidth;
     int m_screenHeight;
+    bool m_running;
+
+    void handleEvents();
 
 public:
     bool init();
