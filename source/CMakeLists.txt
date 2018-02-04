@@ -16,9 +16,11 @@ set(INCLUDE_DIRS
 # tell the top level cmake file the names of all of our modules
 set(PROJECT_LIBS 
     gameLogic
+    ui
     
     PARENT_SCOPE
 )
 
 # build each game module
 add_subdirectory(gameLogic)
+add_subdirectory(ui)

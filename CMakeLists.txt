@@ -10,6 +10,7 @@ set( BIN_DIR                        ${CMAKE_SOURCE_DIR}/bin )
 set( CMAKE_CXX_STANDARD             11                      )
 set( CMAKE_CXX_STANDARD_REQUIRED    ON                      )
 set( CMAKE_CXX_EXTENSIONS           OFF                     )
+set( CMAKE_MODULE_PATH              ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 # helps while using VS Code
 include(CMakeToolsHelpers OPTIONAL) 
