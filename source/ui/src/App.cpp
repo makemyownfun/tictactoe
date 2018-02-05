@@ -12,16 +12,19 @@ bool App::init() {
 
     m_screenWidth = 800;
     m_screenHeight = 450;
-	SDL_Window* window = SDL_CreateWindow("Tic Tac Toe", 
+	SDL_Window* m_window = SDL_CreateWindow("Tic Tac Toe", 
 	                                    SDL_WINDOWPOS_UNDEFINED, 
 										SDL_WINDOWPOS_UNDEFINED, 
 										m_screenWidth, m_screenHeight, 
 										SDL_WINDOW_RESIZABLE);
 
-    if(window == nullptr) {
+    if(m_window == nullptr) {
         std::cout << "window could not be created: " << SDL_GetError() << std::endl;
         return false;
     }
+
+	Uint32 flags = SDL_RENDERER_ACCELERATED;
+	m_renderer = SDL_CreateRenderer(m_window, -1, flags);
 
     return true;
 }
@@ -45,4 +48,11 @@ void App::handleEvents() {
 			}
 		}
 	}
+}
+
+void App::cleanup() {
+	SDL_DestroyRenderer(m_renderer);
+	SDL_DestroyWindow(m_window);
+
+	SDL_Quit();
 }

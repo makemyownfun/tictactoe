@@ -1,7 +1,5 @@
 project(ui)
 
-include_directories(include)
-
 set(SOURCES
     src/App.cpp
 )
@@ -27,16 +25,19 @@ if(NOT SDL2_FOUND)
         CMAKE_ARGS ${CMAKE_ARGS}
     )
 
-    add_dependencies(ui ${SDL_TARGET})
-
     set(SDL2_INCLUDE_DIR ${LIB_DIR}/${SDL_TARGET}/include/SDL2)
     find_library(SDL2_LIBRARY
 	    NAMES SDL2
 	    PATH_SUFFIXES lib
 	    PATHS ${LIB_DIR}/${SDL_TARGET}
     )
+
+    add_dependencies(ui ${SDL_TARGET})
 endif()
 
-
+include_directories(include)
 include_directories(${SDL2_INCLUDE_DIR})
 target_link_libraries( ui ${SDL2_LIBRARY} )
+
+
+
