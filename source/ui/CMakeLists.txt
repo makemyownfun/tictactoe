@@ -11,7 +11,7 @@ add_library(ui SHARED ${SOURCES})
 
 # add external dependencies
 # SDL2
-find_package(SDL2 REQUIRED)
+find_package(SDL2)
 if(NOT SDL2_FOUND)
     message(STATUS "building SDL2 from source since it wasnt found")
     message(WARNING "building sdl2 from source requires mercurial")
