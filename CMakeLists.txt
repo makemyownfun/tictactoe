@@ -7,13 +7,15 @@ endif()
 # set some variables
 set( EXE                            "tictactoe"             )
 set( BIN_DIR                        ${CMAKE_SOURCE_DIR}/bin )
+set( LIB_DIR                        ${CMAKE_SOURCE_DIR}/libs)
 set( CMAKE_CXX_STANDARD             11                      )
 set( CMAKE_CXX_STANDARD_REQUIRED    ON                      )
 set( CMAKE_CXX_EXTENSIONS           OFF                     )
 set( CMAKE_MODULE_PATH              ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/modules/")
 
 # helps while using VS Code
-include(CMakeToolsHelpers OPTIONAL) 
+include(CMakeToolsHelpers OPTIONAL)
+include(ExternalProject)
 
 # make sure the binary is put in the bin dir
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${BIN_DIR} )
