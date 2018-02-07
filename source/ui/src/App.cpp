@@ -2,14 +2,17 @@
 
 #include <SDL.h>
 
+#include "Screen.h"
 #include "App.h"
 
 bool App::init() {
+	// initialize sdl2
     if (SDL_Init(SDL_INIT_VIDEO) != 0){
 		std::cout << "SDL_Init Error: " << SDL_GetError() << std::endl;
 		return false;
 	}
 
+	// setup the window
     m_screenWidth = 800;
     m_screenHeight = 450;
 	SDL_Window* m_window = SDL_CreateWindow("Tic Tac Toe", 
@@ -23,34 +26,40 @@ bool App::init() {
         return false;
     }
 
+	// setup the renderer
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 	m_renderer = SDL_CreateRenderer(m_window, -1, flags);
+	if(m_renderer == nullptr) {
+        std::cout << "renderer could not be created: " << SDL_GetError() << std::endl;
+        return false;
+    }
+
+	// setup screen
+	m_screen = new Screen();
+	m_screen->init(m_screenWidth, m_screenHeight);
+
 
     return true;
 }
 
 void App::run() {
-    m_running = true;
-    while(m_running) {
-        handleEvents();
+    bool running = true;
+    while(running) {
+		// handle events
+        running = m_screen->handleEvents();
+
+		// update the screen
+		m_screen->update();
+
+		// display the screen
+		m_screen->display(*m_renderer);
     }
 }
 
-void App::handleEvents() {
-    SDL_Event event;
-	while (SDL_PollEvent(&event) != 0) {
-		if (event.type == SDL_QUIT) {
-			m_running = false;
-		}
-		else if (event.type == SDL_KEYUP) {
-			if(event.key.keysym.sym == SDLK_ESCAPE) {
-				m_running = false;
-			}
-		}
-	}
-}
-
 void App::cleanup() {
+	delete(m_screen);
+	m_screen = nullptr;
+
 	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyWindow(m_window);
 

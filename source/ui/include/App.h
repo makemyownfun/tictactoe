@@ -5,16 +5,15 @@
 
 class SDL_Window;
 class SDL_Renderer;
+class Screen;
 
 class App {
     int m_screenWidth;
     int m_screenHeight;
-    bool m_running;
 
     SDL_Window* m_window;
     SDL_Renderer* m_renderer;
-
-    void handleEvents();
+    Screen* m_screen;
 
 public:
     bool init();
