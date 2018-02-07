@@ -4,6 +4,7 @@ set(SOURCES
     src/App.cpp
     src/Screen.cpp
     src/UIelement.cpp
+    src/Texture.cpp
 )
 
 #Generate the shared library from the sources
