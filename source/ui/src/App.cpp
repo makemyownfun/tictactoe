@@ -36,7 +36,10 @@ bool App::init() {
 
 	// setup screen
 	m_screen = new Screen();
-	m_screen->init(m_screenWidth, m_screenHeight);
+	if(!m_screen->init(m_screenWidth, m_screenHeight)) {
+		std::cout << "screen failed to initialize\n";
+		return false;
+	}
 
 
     return true;
