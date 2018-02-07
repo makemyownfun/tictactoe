@@ -5,6 +5,8 @@
 void Screen::init(int width, int height) {
     m_width = width;
     m_height = height;
+
+    m_backgroundColor = {0xE0, 0xE0, 0xE0, 0x00};
 }
 
 // handles input events
@@ -30,15 +32,17 @@ void Screen::update() {
 }
 
 void Screen::display(SDL_Renderer& renderer) {
-    // clear the screen
-	SDL_SetRenderDrawColor(&renderer, 0x00, 0x00, 0x00, 0x00 );
+    // clear the screen (with the current background color)
+	SDL_SetRenderDrawColor(&renderer, 
+        m_backgroundColor.r, 
+        m_backgroundColor.g, 
+        m_backgroundColor.b, 
+        m_backgroundColor.a);
 	SDL_RenderClear(&renderer);
 
-    // blit the screen to the renderer
-    // render the background
-    SDL_Rect fillRect = { m_width / 4, m_height / 4, m_width / 2, m_height / 2 };
-    SDL_SetRenderDrawColor( &renderer, 0x00, 0x00, 0xFF, 0xFF );        
-    SDL_RenderFillRect( &renderer, &fillRect );
+    // render the screen
+    
+    
 
     // switch back and front buffer
     SDL_RenderPresent(&renderer);

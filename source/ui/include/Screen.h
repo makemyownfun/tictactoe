@@ -4,9 +4,10 @@
 class SDL_Renderer;
 
 class Screen {
-    SDL_Texture* m_screenTexture;
     int m_width;
     int m_height;
+    SDL_Texture* m_screenTexture;
+    SDL_Color m_backgroundColor;
 
 public:
     void init(int width, int height);
