@@ -3,23 +3,28 @@
 
 #include <vector>
 #include <memory>
+#include <string>
+#include <unordered_map>
 
 #include "UIelement.h"
 
-class SDL_Renderer;
-
 class Screen {
+    SDL_Renderer* m_renderer;
     int m_width;
     int m_height;
     SDL_Texture* m_screenTexture;
     SDL_Color m_backgroundColor;
     std::vector<std::unique_ptr<UIelement>> m_children;
+    std::unordered_map<std::string,std::unique_ptr<Texture>> m_textures;
+
+    bool loadTextures();
 
 public:
-    void init(int width, int height);
+    bool init(SDL_Window& window);
     bool handleEvents();
     void update();
-    void display(SDL_Renderer& renderer);
+    void display();
+    void cleanup();
 };
 
 #endif

@@ -1,12 +1,29 @@
+#include <iostream>
+#include <memory>
+
 #include <SDL.h>
 
 #include "Screen.h"
 
-void Screen::init(int width, int height) {
-    m_width = width;
-    m_height = height;
+bool Screen::init(SDL_Window& window) {
+    // setup the renderer
+	Uint32 flags = SDL_RENDERER_ACCELERATED;
+	m_renderer = SDL_CreateRenderer(&window, -1, flags);
+	if(m_renderer == nullptr) {
+        std::cout << "renderer could not be created: " << SDL_GetError() << std::endl;
+        return false;
+    }
+
+    SDL_GetWindowSize(&window, &m_width, &m_height);
 
     m_backgroundColor = {0xE0, 0xE0, 0xE0, 0x00};
+
+   	if(!loadTextures()) {
+            std::cout << "failed to load all of the ui textures\n";
+            return false;
+    }
+
+    return true;
 }
 
 // handles input events
@@ -31,21 +48,43 @@ void Screen::update() {
 
 }
 
-void Screen::display(SDL_Renderer& renderer) {
+void Screen::display() {
     // clear the screen (with the current background color)
-	SDL_SetRenderDrawColor(&renderer, 
+	SDL_SetRenderDrawColor(m_renderer, 
         m_backgroundColor.r, 
         m_backgroundColor.g, 
         m_backgroundColor.b, 
         m_backgroundColor.a);
-	SDL_RenderClear(&renderer);
+	SDL_RenderClear(m_renderer);
 
     // render the screen
     for(auto& element : m_children) {
-        element->render(renderer);
+        element->render(*m_renderer);
     }
     
 
     // switch back and front buffer
-    SDL_RenderPresent(&renderer);
+    SDL_RenderPresent(m_renderer);
+}
+
+// currently a hard coded list of textures
+// TODO: load based on a text file that can be updadted without recompiling
+bool Screen::loadTextures() {
+    std::vector<std::string> names;
+    names.push_back("button.bmp");
+    names.push_back("button-hover.bmp");
+    names.push_back("button-click.bmp");
+
+    for(auto name : names) {
+        m_textures[name] = std::unique_ptr<Texture>(new Texture());
+        if(!m_textures[name]->loadTexture(*m_renderer, name)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void Screen::cleanup() {
+    SDL_DestroyRenderer(m_renderer);
 }

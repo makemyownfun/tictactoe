@@ -26,17 +26,9 @@ bool App::init() {
         return false;
     }
 
-	// setup the renderer
-	Uint32 flags = SDL_RENDERER_ACCELERATED;
-	m_renderer = SDL_CreateRenderer(m_window, -1, flags);
-	if(m_renderer == nullptr) {
-        std::cout << "renderer could not be created: " << SDL_GetError() << std::endl;
-        return false;
-    }
-
 	// setup screen
 	m_screen = new Screen();
-	if(!m_screen->init(m_screenWidth, m_screenHeight)) {
+	if(!m_screen->init(*m_window)) {
 		std::cout << "screen failed to initialize\n";
 		return false;
 	}
@@ -55,15 +47,15 @@ void App::run() {
 		m_screen->update();
 
 		// display the screen
-		m_screen->display(*m_renderer);
+		m_screen->display();
     }
 }
 
 void App::cleanup() {
+	m_screen->cleanup();
 	delete(m_screen);
 	m_screen = nullptr;
 
-	SDL_DestroyRenderer(m_renderer);
 	SDL_DestroyWindow(m_window);
 
 	SDL_Quit();
