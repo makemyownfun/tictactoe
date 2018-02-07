@@ -3,6 +3,7 @@ project(ui)
 set(SOURCES
     src/App.cpp
     src/Screen.cpp
+    src/UIelement.cpp
 )
 
 #Generate the shared library from the sources

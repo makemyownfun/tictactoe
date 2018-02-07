@@ -41,7 +41,9 @@ void Screen::display(SDL_Renderer& renderer) {
 	SDL_RenderClear(&renderer);
 
     // render the screen
-    
+    for(auto& element : m_children) {
+        element->render(renderer);
+    }
     
 
     // switch back and front buffer
