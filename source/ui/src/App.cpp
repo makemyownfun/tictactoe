@@ -43,7 +43,7 @@ void App::run() {
 		// handle events
         running = m_screen->handleEvents();
 
-		// update the screen
+		// update the screen (used for animations, etc.)
 		m_screen->update();
 
 		// display the screen

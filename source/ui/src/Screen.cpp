@@ -4,6 +4,7 @@
 #include <SDL.h>
 
 #include "Screen.h"
+#include "Focusable.h"
 
 bool Screen::init(SDL_Window& window) {
     // setup the renderer
@@ -30,6 +31,7 @@ bool Screen::init(SDL_Window& window) {
 // returns false if the app should quit
 bool Screen::handleEvents() {
     SDL_Event event;
+    int mouseX, mouseY;
 	while (SDL_PollEvent(&event) != 0) {
 		if (event.type == SDL_QUIT) {
 			return false;
@@ -39,6 +41,19 @@ bool Screen::handleEvents() {
 				return false;
 			}
 		}
+        else if(event.type == SDL_MOUSEMOTION ||
+                event.type == SDL_MOUSEBUTTONDOWN ||
+                event.type == SDL_MOUSEBUTTONUP) {
+            SDL_GetMouseState(&mouseX, &mouseY);
+
+            Focusable* elem;
+            for(auto& child : m_children) {
+                elem = dynamic_cast<Focusable *>(child.get());
+                if(elem != nullptr) {
+                    elem->handleEvent(mouseX, mouseY, event);
+                }
+            }
+        }
 	}
 
     return true;
@@ -68,7 +83,8 @@ void Screen::display() {
 }
 
 // currently a hard coded list of textures
-// TODO: load based on a text file that can be updadted without recompiling
+// TODO: load based on a text file that can be updated without recompiling
+// This should load EVERY texture needed on every screen
 bool Screen::loadTextures() {
     std::vector<std::string> names;
     names.push_back("button.bmp");
@@ -84,6 +100,7 @@ bool Screen::loadTextures() {
 
     return true;
 }
+
 
 void Screen::cleanup() {
     SDL_DestroyRenderer(m_renderer);
